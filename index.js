@@ -1,29 +1,16 @@
+// app.js or index.js
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const routes = require("./routes");
+const connectDB = require("./db");  // Import the connectDB function
+
 require("dotenv").config();  // <-- VERY IMPORTANT to load environment variables before using them
 
 const app = express();
 
-// MongoDB connection
-const connectDB = async () => {
-  try {
-    console.log("Mongo URI: ", process.env.MONGO_URI);  // Debug
-    const connection = await mongoose.connect(process.env.MONGO_URI);
-    if (connection.connection.readyState === 1) {
-      console.log("MongoDB connected");
-    } else {
-      console.log("MongoDB connection failed");
-    }
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
 // Connect to DB
-connectDB();
+connectDB();  // Call the connectDB function to connect to MongoDB
 
 // Middleware
 app.use(express.json());
