@@ -45,13 +45,12 @@ exports.getCart = async (req, res) => {
 // Remove from cart
 exports.removeFromCart = async (req, res) => {
   try {
-    const id = req.params.id;
-    const cart = req.body;
+    const { userId, idMeal } = req.params;
 
-    const user = await User.findById(id);
+    const user = await User.findById(userId);
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-    user.cart = user.cart.filter(item => item.idMeal !== cart.idMeal);
+    user.cart = user.cart.filter(item => item.idMeal !== idMeal);
     await user.save();
 
     res.status(200).json({ success: true, message: "Item removed from cart" });
@@ -63,18 +62,18 @@ exports.removeFromCart = async (req, res) => {
 // Add to favourites
 exports.addToFavourites = async (req, res) => {
   const { id } = req.params;
-  const favourite = req.body;
+  const { idMeal, strMeal, strMealThumb } = req.body;
 
   try {
     const user = await User.findById(id);
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-    const existing = user.favourites.some(fav => fav.idMeal === favourite.idMeal);
+    const existing = user.favourites.some(fav => fav.idMeal === idMeal);
     if (existing) {
       return res.status(400).json({ success: false, message: "Recipe already in favourites" });
     }
 
-    user.favourites.push(favourite);
+    user.favourites.push({ idMeal, strMeal, strMealThumb });
     await user.save();
 
     return res.status(200).json({ success: true, message: "Added to favourites" });
@@ -86,13 +85,13 @@ exports.addToFavourites = async (req, res) => {
 // Remove from favourites
 exports.removeFromFavourites = async (req, res) => {
   const { id } = req.params;
-  const favourite = req.body;
+  const { idMeal } = req.body;
 
   try {
     const user = await User.findById(id);
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-    user.favourites = user.favourites.filter(fav => fav.idMeal !== favourite.idMeal);
+    user.favourites = user.favourites.filter(fav => fav.idMeal !== idMeal);
     await user.save();
 
     return res.status(200).json({ success: true, message: "Removed from favourites" });
@@ -119,16 +118,21 @@ exports.confirmOrder = async (req, res) => {
   const { userId } = req.params;
   const { address } = req.body;
 
+  // Ensure the user model has an address field
+  if (!address) {
+    return res.status(400).json({ success: false, message: "Address is required" });
+  }
+
   try {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-    user.address = address; // Make sure your User model has an 'address' field
+    user.address = address; // Ensure your User model has an 'address' field
     await user.save();
 
     res.json({ success: true, message: "Order confirmed and address saved!" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: "Server error" });}
+    res.status(500).json({ success: false, message: "Server error" });
   }
-
+};
