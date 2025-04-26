@@ -20,7 +20,7 @@ const {
 } = require("./controllers/featureController");
 
 // Auth routes
-router.post("/signup", signup);
+router.post("/signup",signup);
 router.post("/login", login);
 router.get("/logout", logout);
 router.get("/checkUser", verifyToken, checkUser);

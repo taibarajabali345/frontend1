@@ -14,7 +14,10 @@ connectDB();  // Call the connectDB function to connect to MongoDB
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: "https://lovely-empanada-5f6eb2.netlify.app", credentials: true }));
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+}));
 app.use(cookieParser());
 
 // Routes
