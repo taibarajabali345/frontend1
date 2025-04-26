@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 const User = require("../models/User");
 
 // Add to cart
@@ -129,9 +129,8 @@ exports.confirmOrder = async (req, res) => {
     res.json({ success: true, message: "Order confirmed and address saved!" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });}
   }
-=======
 const User = require("../models/User");
 
 // Add to cart
@@ -262,7 +261,6 @@ exports.confirmOrder = async (req, res) => {
     res.json({ success: true, message: "Order confirmed and address saved!" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
->>>>>>> c19c73637400f5f97d32a76c91f05618c6e1205d
+    res.status(500).json({ success: false, message: "Server error" });}
+  
 };

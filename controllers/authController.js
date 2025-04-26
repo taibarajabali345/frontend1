@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");  // Change made here from bcrypt to bcryptjs
 const jwt = require("jsonwebtoken");
@@ -87,7 +87,7 @@ exports.checkUser = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
-=======
+
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");  // Change made here from bcrypt to bcryptjs
 const jwt = require("jsonwebtoken");
@@ -176,4 +176,4 @@ exports.checkUser = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
->>>>>>> c19c73637400f5f97d32a76c91f05618c6e1205d
+
