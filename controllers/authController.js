@@ -19,6 +19,7 @@ exports.signup = async (req, res) => {
 
     // Hash the password
     const hashPassword = await bcrypt.hash(password, 10);
+    console.log("Password hashed:", hashPassword);  // Log the hashed password (for debugging only)
 
     // Create the user
     user = new User({
@@ -31,7 +32,7 @@ exports.signup = async (req, res) => {
 
     return res.status(201).json({ success: true, message: "Signup successful" });
   } catch (error) {
-    console.error("Signup error:", error); // 👈 Also log the error
+    console.error("Signup error:", error); // Log error
     return res.status(500).json({ success: false, message: "Server error. Please try again." });
   }
 };
@@ -70,6 +71,7 @@ exports.login = async (req, res) => {
 
     return res.status(200).json({ success: true, message: "Login successful", user });
   } catch (error) {
+    console.error("Login error:", error); // Log error
     return res.status(500).json({ success: false, message: "Server error. Please try again." });
   }
 };
