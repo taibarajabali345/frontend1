@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const routes = require("./routes");
-const connectDB = require("./db");  // Import the connectDB function
+const connectDB = require("./connection");  // Import the connectDB function
 
 require("dotenv").config();  // <-- VERY IMPORTANT to load environment variables before using them
 
