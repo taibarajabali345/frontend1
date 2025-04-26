@@ -18,7 +18,7 @@ exports.signup = async (req, res) => {
     }
 
     // Hash the password
-    const hashPassword = await bcrypt.hash(password, 10);  // Using bcryptjs here
+    const hashPassword = await bcrypt.hash(password, 10);
 
     // Create the user
     user = new User({
@@ -27,10 +27,11 @@ exports.signup = async (req, res) => {
       password: hashPassword,
     });
 
-    await user.save();  // Save the new user
+    await user.save(); // Save the new user
 
     return res.status(201).json({ success: true, message: "Signup successful" });
   } catch (error) {
+    console.error("Signup error:", error); // 👈 Also log the error
     return res.status(500).json({ success: false, message: "Server error. Please try again." });
   }
 };
