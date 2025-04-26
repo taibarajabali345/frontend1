@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");  // Change made here from bcrypt to bcryptjs
 const jwt = require("jsonwebtoken");
 
 exports.signup = async (req, res) => {
@@ -13,7 +13,7 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ success: false, message: "Please login" });
     }
 
-    const hashPassword = await bcrypt.hash(password, 10);
+    const hashPassword = await bcrypt.hash(password, 10);  // Using bcryptjs here
 
     user = await User.create({
       username,
@@ -39,7 +39,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ success: false, message: "Please signup" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);  // Using bcryptjs here
 
     if (!isMatch) {
       return res.status(400).json({ success: false, message: "Invalid credentials" });
