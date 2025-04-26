@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const port = 5000;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { connectDB } = require("./connection");
@@ -8,16 +9,18 @@ const routes = require("./routes");
 
 connectDB();
 app.use(express.json());
-app.use(cors({ origin: "https://heroic-mousse-c67a4b.netlify.app", credentials: true }));
+const frontendUrl = process.env.NODE_ENV === 'production'
+  ? 'https://heroic-mousse-c67a4b.netlify.app'
+  : 'http://localhost:5173';
+
+app.use(cors({ origin: frontendUrl, credentials: true }));
 app.use(cookieParser());
 app.use("/api", routes);
 
-// 👇 Root route
+// 👇 Add this route for root URL
 app.get("/", (req, res) => {
   res.send("Welcome to HomeChef Backend!");
 });
 
-// ❌ DO NOT use app.listen(port) here!
-
-// ✅ Export for Vercel to handle
+app.listen(port, () => console.log(`Server running on port ${port}`));
 module.exports = app;
