@@ -6,6 +6,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { connectDB } = require("./connection");
 const routes = require("./routes");
+const bcrypt = require('bcryptjs'); // <-- Add this line for bcrypt
 
 connectDB();
 app.use(express.json());
