@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = 5000;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { connectDB } = require("./connection");
@@ -13,13 +12,12 @@ app.use(cors({ origin: "https://heroic-mousse-c67a4b.netlify.app", credentials: 
 app.use(cookieParser());
 app.use("/api", routes);
 
-// 👇 Add this route for root URL
+// 👇 Root route
 app.get("/", (req, res) => {
   res.send("Welcome to HomeChef Backend!");
 });
 
-// Listen (ONLY locally, Vercel will handle it on production)
-app.listen(port, () => console.log(`Server running on port ${port}`));
+// ❌ DO NOT use app.listen(port) here!
 
-// Export app for Vercel
+// ✅ Export for Vercel to handle
 module.exports = app;
